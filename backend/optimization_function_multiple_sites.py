@@ -71,64 +71,176 @@ def optimize_static_config(
 
 
 if __name__ == "__main__":
-    sites = ["001", "002", "003"]
+    # Devices configuration
     devices = ["air", "hydro", "immersion", "gpu", "asic"]
     T = 12
 
-    # Price forecasts
-    h = [8.1, 8.4, 8.7, 8.3, 7.9, 8.2, 8.6, 8.9, 8.5, 8.0, 7.8, 8.1]
-    g = [2.5, 2.7, 2.9, 2.8, 2.6, 2.4, 2.5, 2.8, 3.0, 2.9, 2.7, 2.6]
+    # Mock sites data (example - replace with actual database data)
+    sites_data = [
+        {"id": "site-001", "state": "Texas", "powerCapacity": 150, "energyPrice": 0.04},
+        {
+            "id": "site-002",
+            "state": "Nevada",
+            "powerCapacity": 200,
+            "energyPrice": 0.06,
+        },
+        {
+            "id": "site-003",
+            "state": "Ohio",
+            "powerCapacity": 95,
+            "energyPrice": 0.03,
+        },
+        {
+            "id": "site-004",
+            "state": "California",
+            "powerCapacity": 180,
+            "energyPrice": 0.08,
+        },
+        {
+            "id": "site-005",
+            "state": "Wyoming",
+            "powerCapacity": 220,
+            "energyPrice": 0.035,
+        },
+    ]
 
-    # Per-site energy prices
-    e = {
-        "CA": [0.60, 0.62, 0.58, 0.55, 0.57, 0.59, 0.61, 0.63, 0.60, 0.58, 0.56, 0.57],
-        "TX": [0.50, 0.52, 0.49, 0.48, 0.47, 0.46, 0.48, 0.50, 0.51, 0.49, 0.48, 0.47],
-        "OH": [0.55, 0.57, 0.56, 0.54, 0.53, 0.52, 0.54, 0.56, 0.55, 0.54, 0.53, 0.52],
+    # Extract site IDs and states
+    sites = [site["id"] for site in sites_data]
+    site_states = {site["id"]: site["state"] for site in sites_data}
+    P_MAX = {site["id"]: site["powerCapacity"] * 1000 for site in sites_data}
+
+    # Read CSV forecasts
+    import pandas as pd
+
+    # Hash price forecast
+    h = pd.read_csv("datasets/forecasts/hash_forecast.csv").iloc[:, 1].tolist()[:T]
+
+    # Token price forecast
+    g = pd.read_csv("datasets/forecasts/token_forecast.csv").iloc[:, 1].tolist()[:T]
+
+    # Energy price forecasts per state
+    e_states = {
+        "California": pd.read_csv("datasets/forecasts/cali_energy_forecast.csv")
+        .iloc[:, 1]
+        .tolist()[:T],
+        "Texas": pd.read_csv("datasets/forecasts/texas_energy_forecast.csv")
+        .iloc[:, 1]
+        .tolist()[:T],
+        "Ohio": pd.read_csv("datasets/forecasts/ohio_energy_forecast.csv")
+        .iloc[:, 1]
+        .tolist()[:T],
+        "Nevada": pd.read_csv("datasets/forecasts/nevada_energy_forecast.csv")
+        .iloc[:, 1]
+        .tolist()[:T],
+        "Wyoming": pd.read_csv("datasets/forecasts/wyoming_energy_forecast.csv")
+        .iloc[:, 1]
+        .tolist()[:T],
     }
+
+    # Map energy prices to sites based on their states
+    e = {site: e_states[state] for site, state in site_states.items()}
 
     # Device specs
+    # Device specs (updated values for better distribution)
+    # Device specs (more balanced distribution)
     r_hash = {
-        "001": {"air": 1000, "hydro": 5000, "immersion": 10000, "gpu": 0, "asic": 0},
-        "002": {"air": 800, "hydro": 4500, "immersion": 9000, "gpu": 0, "asic": 0},
-        "003": {"air": 1200, "hydro": 5200, "immersion": 11000, "gpu": 0, "asic": 0},
+        "site-001": {
+            "air": 1500,
+            "hydro": 1800,
+            "immersion": 2000,
+            "gpu": 1200,
+            "asic": 2500,
+        },
+        "site-002": {
+            "air": 1600,
+            "hydro": 1900,
+            "immersion": 2100,
+            "gpu": 1300,
+            "asic": 2600,
+        },
+        "site-003": {
+            "air": 1700,
+            "hydro": 2000,
+            "immersion": 2200,
+            "gpu": 1400,
+            "asic": 2700,
+        },
+        "site-004": {
+            "air": 1800,
+            "hydro": 2100,
+            "immersion": 2300,
+            "gpu": 1500,
+            "asic": 2800,
+        },
+        "site-005": {
+            "air": 1900,
+            "hydro": 2200,
+            "immersion": 2400,
+            "gpu": 1600,
+            "asic": 2900,
+        },
     }
     r_tok = {
-        "CA": {"air": 0, "hydro": 0, "immersion": 0, "gpu": 100, "asic": 500},
-        "TX": {"air": 0, "hydro": 0, "immersion": 0, "gpu": 90, "asic": 400},
-        "OH": {"air": 0, "hydro": 0, "immersion": 0, "gpu": 110, "asic": 600},
+        "site-001": {"air": 50, "hydro": 50, "immersion": 50, "gpu": 50, "asic": 50},
+        "site-002": {"air": 45, "hydro": 45, "immersion": 45, "gpu": 45, "asic": 45},
+        "site-003": {"air": 55, "hydro": 55, "immersion": 55, "gpu": 55, "asic": 55},
+        "site-004": {"air": 60, "hydro": 60, "immersion": 60, "gpu": 60, "asic": 60},
+        "site-005": {"air": 65, "hydro": 65, "immersion": 65, "gpu": 65, "asic": 65},
     }
+    # Power requirements per device per site (more balanced distribution)
     power = {
-        "CA": {
-            "air": 3500,
-            "hydro": 5000,
-            "immersion": 10000,
-            "gpu": 500,
-            "asic": 15000,
+        "site-001": {
+            "air": 1500,
+            "hydro": 2000,
+            "immersion": 2500,
+            "gpu": 1000,
+            "asic": 3000,
         },
-        "TX": {
-            "air": 3000,
-            "hydro": 4800,
-            "immersion": 9500,
-            "gpu": 450,
-            "asic": 15000,
+        "site-002": {
+            "air": 1600,
+            "hydro": 2100,
+            "immersion": 2600,
+            "gpu": 1100,
+            "asic": 3100,
         },
-        "OH": {
-            "air": 3600,
-            "hydro": 5200,
-            "immersion": 10500,
-            "gpu": 550,
-            "asic": 15000,
+        "site-003": {
+            "air": 1700,
+            "hydro": 2200,
+            "immersion": 2700,
+            "gpu": 1200,
+            "asic": 3200,
+        },
+        "site-004": {
+            "air": 1800,
+            "hydro": 2300,
+            "immersion": 2800,
+            "gpu": 1300,
+            "asic": 3300,
+        },
+        "site-005": {
+            "air": 1900,
+            "hydro": 2400,
+            "immersion": 2900,
+            "gpu": 1400,
+            "asic": 3400,
         },
     }
+    # Maximum device counts per site (increased values for better distribution)
+    # Maximum device counts per site (more balanced distribution)
     N = {
-        "CA": {"air": 10, "hydro": 5, "immersion": 2, "gpu": 30, "asic": 5},
-        "TX": {"air": 8, "hydro": 4, "immersion": 2, "gpu": 25, "asic": 4},
-        "OH": {"air": 12, "hydro": 6, "immersion": 3, "gpu": 35, "asic": 6},
+        "site-001": {"air": 10, "hydro": 10, "immersion": 8, "gpu": 10, "asic": 8},
+        "site-002": {"air": 10, "hydro": 10, "immersion": 8, "gpu": 10, "asic": 8},
+        "site-003": {"air": 12, "hydro": 12, "immersion": 10, "gpu": 12, "asic": 10},
+        "site-004": {"air": 12, "hydro": 12, "immersion": 10, "gpu": 12, "asic": 10},
+        "site-005": {"air": 14, "hydro": 14, "immersion": 12, "gpu": 14, "asic": 12},
     }
-    P_MAX = {"CA": 80000, "TX": 70000, "OH": 75000}
 
     # Global energy‐spend budget
-    E_BUDGET = 0.60 * 80000 * 4 + 0.50 * 70000 * 4 + 0.55 * 75000 * 4
+    # Calculate power capacities and energy budget
+    P_MAX = {
+        site["id"]: site["powerCapacity"] * 1000 for site in sites_data
+    }  # Convert MW to W
+    E_BUDGET = sum(site["powerCapacity"] * 1000 * 4 for site in sites_data) * 100
 
     config = optimize_static_config(
         sites, devices, T, r_hash, r_tok, power, N, h, g, e, P_MAX, E_BUDGET
