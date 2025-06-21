@@ -1,4 +1,6 @@
 import pulp
+from autogluon.timeseries import TimeSeriesPredictor
+import pandas as pd
 
 
 def optimize_static_config(
@@ -69,7 +71,7 @@ def optimize_static_config(
 
 
 if __name__ == "__main__":
-    sites = ["CA", "TX", "OH"]
+    sites = ["001", "002", "003"]
     devices = ["air", "hydro", "immersion", "gpu", "asic"]
     T = 12
 
@@ -86,9 +88,9 @@ if __name__ == "__main__":
 
     # Device specs
     r_hash = {
-        "CA": {"air": 1000, "hydro": 5000, "immersion": 10000, "gpu": 0, "asic": 0},
-        "TX": {"air": 800, "hydro": 4500, "immersion": 9000, "gpu": 0, "asic": 0},
-        "OH": {"air": 1200, "hydro": 5200, "immersion": 11000, "gpu": 0, "asic": 0},
+        "001": {"air": 1000, "hydro": 5000, "immersion": 10000, "gpu": 0, "asic": 0},
+        "002": {"air": 800, "hydro": 4500, "immersion": 9000, "gpu": 0, "asic": 0},
+        "003": {"air": 1200, "hydro": 5200, "immersion": 11000, "gpu": 0, "asic": 0},
     }
     r_tok = {
         "CA": {"air": 0, "hydro": 0, "immersion": 0, "gpu": 100, "asic": 500},
