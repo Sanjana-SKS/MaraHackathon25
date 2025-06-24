@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import HeaderNav from '@/components/HeaderNav';
 import GlobalStats from '@/components/GlobalStats';
@@ -6,6 +5,7 @@ import APIExplorer from '@/components/APIExplorer';
 import ForecastModels from '@/components/ForecastModels';
 import SitesList from '@/components/SitesList';
 import AdminDashboard from '@/components/AdminDashboard';
+import OptimizationPanel from '@/components/OptimizationPanel';
 import MapView from '@/components/MapView';
 import { mockSites as initialMockSites } from '@/data/mockSites';
 import { Site } from '@/types/site';
@@ -33,6 +33,8 @@ const Index = () => {
         return <APIExplorer sites={sites} />;
       case 'forecast':
         return <ForecastModels />;
+      case 'optimization':
+        return <OptimizationPanel />;
       case 'sites':
         return (
           <SitesList 

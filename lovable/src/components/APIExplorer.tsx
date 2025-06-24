@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -19,7 +18,7 @@ import {
 } from 'lucide-react';
 
 interface Site {
-  id: string;
+  id: number;
   name: string;
   state: string;
   curtailmentRisk: string;

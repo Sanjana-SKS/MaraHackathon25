@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Bell, Settings, MapPin, BarChart3, Cpu, TrendingUp, Shield, Zap } from 'lucide-react';
+import { Bell, Settings, MapPin, BarChart3, Cpu, TrendingUp, Shield, Zap, Target } from 'lucide-react';
 
 interface HeaderNavProps {
   activeTab?: string;
@@ -13,6 +12,7 @@ const HeaderNav: React.FC<HeaderNavProps> = ({ activeTab = 'map', onTabChange })
   const navItems = [
     { key: 'map', label: 'Map', icon: MapPin },
     { key: 'sites', label: 'Sites', icon: BarChart3 },
+    { key: 'optimization', label: 'Optimization', icon: Target },
     { key: 'api', label: 'API Explorer', icon: Cpu },
     { key: 'forecast', label: 'Forecast Models', icon: TrendingUp },
     { key: 'admin', label: 'Admin', icon: Shield }

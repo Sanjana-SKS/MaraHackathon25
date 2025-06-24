@@ -3,7 +3,7 @@ import { Site } from '@/types/site';
 
 export const mockSites: Site[] = [
   {
-    id: 'site-001',
+    id: 1,
     name: 'Texas Solar Farm Alpha',
     lat: 31.9686,
     lng: -99.9018,
@@ -16,11 +16,42 @@ export const mockSites: Site[] = [
     energyPrice: 0.04,
     revenue: 12500,
     curtailmentRisk: 'low',
-    weather: { windSpeed: 12, solarIrradiance: 850, temp: 85, cloudCover: 20 }
+    weather: { windSpeed: 12, solarIrradiance: 850, temp: 85, cloudCover: 20 },
+    inference: {
+        asic: {
+            max_machines: 10,
+            power: 15000,
+            tokens: 500
+        },
+        gpu: {
+            max_machines: 10,
+            power: 5000,
+            tokens: 1000
+        }
+    },
+    miners: {
+        air: {
+            max_machines: 10,
+            hashrate: 1000,
+            power: 3500
+        },
+        hydro: {
+            max_machines: 10,
+            hashrate: 5000,
+            power: 5000
+        },
+        immersion: {
+            max_machines: 10,
+            hashrate: 10000,
+            power: 10000
+        }
+    },
+    power: 1000000,
+    site_id: 1,
+    updated_at: "2025-06-21T13:17:50.126193"
   },
   {
-    id: 'site-002',
-    name: 'Nevada Mining Complex',
+    name: 'California Hybrid Hub',
     lat: 38.8026,
     lng: -116.4194,
     state: 'Nevada',
@@ -32,10 +63,43 @@ export const mockSites: Site[] = [
     energyPrice: 0.06,
     revenue: 18200,
     curtailmentRisk: 'medium',
-    weather: { windSpeed: 8, solarIrradiance: 920, temp: 92, cloudCover: 5 }
+    weather: { windSpeed: 8, solarIrradiance: 920, temp: 92, cloudCover: 5 },
+    inference: {
+        asic: {
+            max_machines: 10,
+            power: 15000,
+            tokens: 500
+        },
+        gpu: {
+            max_machines: 10,
+            power: 5000,
+            tokens: 1000
+        }
+    },
+    miners: {
+        air: {
+            max_machines: 10,
+            hashrate: 1000,
+            power: 3500
+        },
+        hydro: {
+            max_machines: 10,
+            hashrate: 5000,
+            power: 5000
+        },
+        immersion: {
+            max_machines: 10,
+            hashrate: 10000,
+            power: 10000
+        }
+    },
+    power: 1000000,
+    id: 2,
+    site_id: 2,
+    updated_at: "2025-06-21T13:17:50.126193"
   },
   {
-    id: 'site-003',
+    id: 3,
     name: 'Montana Wind Grid',
     lat: 47.0527,
     lng: -109.6333,
@@ -48,10 +112,42 @@ export const mockSites: Site[] = [
     energyPrice: 0.03,
     revenue: 8900,
     curtailmentRisk: 'low',
-    weather: { windSpeed: 18, solarIrradiance: 780, temp: 68, cloudCover: 35 }
+    weather: { windSpeed: 18, solarIrradiance: 780, temp: 68, cloudCover: 35 },
+    inference: {
+        asic: {
+            max_machines: 10,
+            power: 15000,
+            tokens: 500
+        },
+        gpu: {
+            max_machines: 10,
+            power: 5000,
+            tokens: 1000
+        }
+    },
+    miners: {
+        air: {
+            max_machines: 10,
+            hashrate: 1000,
+            power: 3500
+        },
+        hydro: {
+            max_machines: 10,
+            hashrate: 5000,
+            power: 5000
+        },
+        immersion: {
+            max_machines: 10,
+            hashrate: 10000,
+            power: 10000
+        }
+    },
+    power: 1000000,
+    site_id: 3,
+    updated_at: "2025-06-21T13:17:50.126193"
   },
   {
-    id: 'site-004',
+    id: 4,
     name: 'California Hybrid Hub',
     lat: 36.7783,
     lng: -119.4179,
@@ -64,10 +160,42 @@ export const mockSites: Site[] = [
     energyPrice: 0.08,
     revenue: 15600,
     curtailmentRisk: 'high',
-    weather: { windSpeed: 6, solarIrradiance: 800, temp: 88, cloudCover: 15 }
+    weather: { windSpeed: 6, solarIrradiance: 800, temp: 88, cloudCover: 15 },
+    inference: {
+        asic: {
+            max_machines: 10,
+            power: 15000,
+            tokens: 500
+        },
+        gpu: {
+            max_machines: 10,
+            power: 5000,
+            tokens: 1000
+        }
+    },
+    miners: {
+        air: {
+            max_machines: 10,
+            hashrate: 1000,
+            power: 3500
+        },
+        hydro: {
+            max_machines: 10,
+            hashrate: 5000,
+            power: 5000
+        },
+        immersion: {
+            max_machines: 10,
+            hashrate: 10000,
+            power: 10000
+        }
+    },
+    power: 1000000,
+    site_id: 4,
+    updated_at: "2025-06-21T13:17:50.126193"
   },
   {
-    id: 'site-005',
+    id: 5,
     name: 'Wyoming Coal-to-Crypto',
     lat: 43.0759,
     lng: -107.2903,
@@ -80,6 +208,38 @@ export const mockSites: Site[] = [
     energyPrice: 0.035,
     revenue: 22100,
     curtailmentRisk: 'medium',
-    weather: { windSpeed: 14, solarIrradiance: 690, temp: 75, cloudCover: 45 }
+    weather: { windSpeed: 14, solarIrradiance: 690, temp: 75, cloudCover: 45 },
+    inference: {
+        asic: {
+            max_machines: 10,
+            power: 15000,
+            tokens: 500
+        },
+        gpu: {
+            max_machines: 10,
+            power: 5000,
+            tokens: 1000
+        }
+    },
+    miners: {
+        air: {
+            max_machines: 10,
+            hashrate: 1000,
+            power: 3500
+        },
+        hydro: {
+            max_machines: 10,
+            hashrate: 5000,
+            power: 5000
+        },
+        immersion: {
+            max_machines: 10,
+            hashrate: 10000,
+            power: 10000
+        }
+    },
+    power: 1000000,
+    site_id: 5,
+    updated_at: "2025-06-21T13:17:50.126193"
   }
 ];
