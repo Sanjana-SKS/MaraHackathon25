@@ -1,6 +1,7 @@
 import pulp
 import json
-from autogluon.timeseries import TimeSeriesPredictor
+
+# from autogluon.timeseries import TimeSeriesPredictor  # Temporarily commented out
 import pandas as pd
 
 
@@ -173,9 +174,7 @@ if __name__ == "__main__":
     e = {site: e_states[state] for site, state in site_states.items()}
 
     # Calculate a more realistic energy budget based on sites' power capacity
-    E_BUDGET = sum(
-        site["powerCapacity"] * 1000 * 24 * 30 for site in sites_data
-    )  
+    E_BUDGET = sum(site["powerCapacity"] * 1000 * 24 * 30 for site in sites_data)
     print(f"\nEnergy Budget: {E_BUDGET/1000000:.2f} MWh")
 
     # Run optimization
